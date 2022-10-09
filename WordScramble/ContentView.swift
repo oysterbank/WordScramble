@@ -65,6 +65,11 @@ struct ContentView: View {
             return
         }
         
+        guard isNotStartWord(word: answer) else {
+            wordError(title: "That doesn't count", message: "Don't just use the provided word, make new ones!")
+            return
+        }
+        
         withAnimation {
             usedWords.insert(answer, at: 0)
         }
@@ -114,6 +119,10 @@ struct ContentView: View {
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
         return misspelledRange.location == NSNotFound
+    }
+    
+    func isNotStartWord(word: String) -> Bool {
+        word != rootWord
     }
     
     func wordError(title: String, message: String) {
